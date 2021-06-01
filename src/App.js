@@ -8,15 +8,15 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 
 const App = () => {
-  const [blogFormVis, setBlogFormVis] = useState(false) 
-  const [blogs, setBlogs] = useState([]) 
+  const [blogFormVis, setBlogFormVis] = useState(false)
+  const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
-  const [username, setUsername] = useState('') 
-  const [password, setPassword] = useState('') 
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
   useEffect(() => {
     blogService
@@ -39,8 +39,8 @@ const App = () => {
     event.preventDefault()
     try {
       const user = await loginService.login(username, password)
-      
-      window.localStorage.setItem("user", JSON.stringify(user))
+
+      window.localStorage.setItem('user', JSON.stringify(user))
       blogService.setToken(user.token)
       setUser(user)
       setUsername('')
@@ -64,14 +64,14 @@ const App = () => {
       likes: 0
     }
     blogService.create(newBlog).then(
-      
+
       newBlog => {
         console.log(newBlog)
         setBlogs([...blogs, newBlog])
-        setTitle("")
-        setAuthor("")
-        setUrl("")
-        setErrorMessage("New blog added")
+        setTitle('')
+        setAuthor('')
+        setUrl('')
+        setErrorMessage('New blog added')
         setTimeout(() => {
           setErrorMessage(null)
         }, 5000)
@@ -102,28 +102,28 @@ const App = () => {
         console.log(error)
       })
   }
-  
+
   return (
     <div>
       <h1>Blogs</h1>
 
       <Notification message={errorMessage} />
 
-      {user === null 
+      {user === null
         ? <LoginForm handleLogin={handleLogin} username={username} setUsername={setUsername} setPassword={setPassword} password={password}/>
-        : 
+        :
         <div>
           <p>{user.name} logged-in</p>
-          <button onClick={() =>{
-            window.localStorage.removeItem("user")
+          <button onClick={() => {
+            window.localStorage.removeItem('user')
             setUser(null)}
           }>Log out</button>
         </div>
       }
       <button onClick={() => {setBlogFormVis(true)}}>create new blog</button>
-      {user !== null && 
+      {user !== null &&
       <Togglable isShown={blogFormVis}>
-        <BlogForm 
+        <BlogForm
           addBlog={addBlog}
           title={title}
           setTitle={setTitle}
@@ -140,8 +140,8 @@ const App = () => {
           <h2>blogs</h2>
           {blogs.map(blog =>
           {
-            return <Blog 
-              key         = {blog.id} 
+            return <Blog
+              key         = {blog.id}
               blog        = {blog}
               updateLike  = {updateLike}
               deleteBlog  = {deleteBlog}
@@ -150,7 +150,7 @@ const App = () => {
           )}
         </div>
       )}
-      
+
     </div>
   )
 }

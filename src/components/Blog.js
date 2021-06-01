@@ -25,8 +25,9 @@ const Blog = ({
     }
   }
 
-  return (<div style={{ border: '1px solid black' }}>
-    {blog.title}
+  return (<div className="blogs-container" style={{ border: '1px solid black' }}>
+    <p className="title">{blog.title}</p>
+    <p className="author">{blog.author}</p>
     {' '}
 
     {!showDetails
@@ -37,7 +38,6 @@ const Blog = ({
       &&
       <>
         <p>{blog.url}</p>
-        <p>{blog.author}</p>
         <div className='like-item'>Likes {blog.likes ? blog.likes : '-'}</div>
         <button id='like-button' onClick={() => addOneLike(blog)}>Like</button>
         <button id='like-button' onClick={() => deleteOneBlog(blog)}>Delete</button>
@@ -48,8 +48,8 @@ const Blog = ({
 
 Blog.propTypes = {
   blog       : PropTypes.object.isRequired,
-  updateLike : PropTypes.func.isRequired,
-  deleteBlog : PropTypes.func.isRequired
+  updateLike : PropTypes.func,
+  deleteBlog : PropTypes.func
 }
 
 export default Blog
